@@ -344,8 +344,8 @@ body {
     width: 50px;
   }
   .gameOver .gameOverBody {
-    height: 25%;
-    width: 85%;
+    height: 35%;
+    width: 80%;
     margin-bottom: 100px;
   }
   .gameOver .gameOverBody img {
