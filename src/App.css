@@ -1,9 +1,4 @@
-html, body {
-  width: 100vw;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
+
 body {
   margin: 0%;
   padding: 0%;
@@ -292,6 +287,12 @@ body {
   
 }
 @media (max-width: 600px) {
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
   .App {
     gap: 100px;
   }
@@ -325,6 +326,7 @@ body {
     background-color: #393e46;
     border-radius: 20px;
     gap: 30px;
+    margin-bottom: 30px;
   }
   .playerSide .playerSideBody .title {
     font-size: 2rem;
