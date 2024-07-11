@@ -328,16 +328,16 @@ body {
     gap: 30px;
   }
   .playerSide .playerSideBody .title {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
   .playerSide .playerSideBody .playerOption {
-    width: 80%;
+    width: 90%;
   }
   .playerSide .playerSideBody .playerOption img {
-    width: 35px;
+    width: 48px;
   }
   .playerSide .playerSideBody .playerOption div {
-    height: 35px;
+    height: 48px;
   }
   .gameBody .tacPlace img {
     width: 50px;
