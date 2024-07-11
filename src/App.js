@@ -78,13 +78,13 @@ function App() {
         setGrid(newGrid);
 
         if (checkGameOver(newGrid)) {
-          setGameOn(false); // Update gameOn state to false
+          setGameOn(false); 
         }
       }
     },
     [gameOn, computerSide]
   );
-console.log(winningCells)
+
   const checkGameOver = (currentGrid) => {
     const winningCombinations = [
       [0, 1, 2],
@@ -99,6 +99,7 @@ console.log(winningCells)
 
     for (let i = 0; i < winningCombinations.length; i++) {
       const [a, b, c] = winningCombinations[i];
+  
       if (
         currentGrid[a] &&
         currentGrid[a] === currentGrid[b] &&
@@ -110,7 +111,7 @@ console.log(winningCells)
         setTimeout(() => setWinCombinationIndex(i), 800);
         ;
         setTimeout(() => setShowGameOver(true), 3000);
-        return true; // Game over, return true
+        return true; 
       }
     }
 
@@ -123,106 +124,183 @@ console.log(winningCells)
     return false; // Game still ongoing, return false
   };
 
-  const getWinningLineStyle = (combinationIndex) => {
+  const getWinningLineStyle = (combinationIndex, winner) => {
     const color = winner === 'X' ? '#4281f8' : '#f99d17';
-    switch (combinationIndex) {
-      case 0: // Top horizontal
-        return {
-          className: 'horizontal',
-          style: {
+    const isSmallScreen = window.innerWidth < 600;
+
+    const smallScreenStyles = {
+        horizontalTop: {
+            top: '17.5%',
+            left: '7.5%',
+            width: '90%',
+        },
+        horizontalMiddle: {
+            top: '47.2%',
+            left: '7.5%',
+            width: '90%',
+        },
+        horizontalBottom: {
+            top: '76.8%',
+            left: '7.5%',
+            width: '90%',
+        },
+        verticalLeft: {
+            top: '7.5%',
+            left: '18.5%',
+            width: '12px',
+            height: '90%',
+        },
+        verticalMiddle: {
+            top: '7.5%',
+            left: '48%',
+            width: '12px',
+            height: '90%',
+        },
+        verticalRight: {
+            top: '7.55%',
+            left: '78%',
+            width: '12px',
+            height: '90%',
+        },
+        diagonalTopLeftBottomRight: {
+            top: '6.5%',
+            left: '10.5%',
+            width: '100%',
+            transform: 'rotate(45deg)',
+            transformOrigin: 'left top',
+        },
+        diagonalTopRightBottomLeft: {
+            top: '10.5%',
+            left: '93.5%',
+            width: '100%',
+            transform: 'rotate(135deg)',
+            transformOrigin: 'left top',
+        },
+    };
+
+    const largeScreenStyles = {
+        horizontalTop: {
             top: '17.2%',
             left: '7.5%',
             width: '85%',
-            backgroundColor: color,
-            transform: 'rotate(0deg)',
-          },
-        };
-      case 1: // Middle horizontal
-        return {
-          className: 'horizontal',
-          style: {
+        },
+        horizontalMiddle: {
             top: '48.2%',
             left: '7.5%',
             width: '85%',
-            backgroundColor: color,
-            transform: 'rotate(0deg)',
-          },
-        };
-      case 2: // Bottom horizontal
-        return {
-          className: 'horizontal',
-          style: {
+        },
+        horizontalBottom: {
             top: '79.2%',
             left: '7.5%',
             width: '85%',
-            backgroundColor: color,
-            transform: 'rotate(0deg)',
-          },
-        };
-      case 3: // Left vertical
-        return {
-          className: 'vertical',
-          style: {
+        },
+        verticalLeft: {
             top: '7.5%',
             left: '17.2%',
             width: '18px',
             height: '85%',
-            backgroundColor: color,
-            transform: 'rotate(0deg)',
-          },
-        };
-      case 4: // Middle vertical
-        return {
-          className: 'vertical',
-          style: {
+        },
+        verticalMiddle: {
             top: '7.5%',
             left: '48.2%',
             width: '18px',
             height: '85%',
-            backgroundColor: color,
-            transform: 'rotate(0deg)',
-          },
-        };
-      case 5: // Right vertical
-        return {
-          className: 'vertical',
-          style: {
+        },
+        verticalRight: {
             top: '7.5%',
             left: '79.2%',
             width: '18px',
             height: '85%',
-            backgroundColor: color,
-            transform: 'rotate(0deg)',
-          },
-        };
-      case 6: // Top-left to bottom-right diagonal
-        return {
-          className: 'diagonal',
-          style: {
+        },
+        diagonalTopLeftBottomRight: {
             top: '7.5%',
             left: '10%',
             width: '117%',
             transform: 'rotate(45deg)',
-            backgroundColor: color,
             transformOrigin: 'left top',
-          },
-        };
-      case 7: // Top-right to bottom-left diagonal
-        return {
-          className: 'diagonal',
-          style: {
+        },
+        diagonalTopRightBottomLeft: {
             top: '9.5%',
             left: '93%',
             width: '117%',
             transform: 'rotate(135deg)',
-            backgroundColor: color,
             transformOrigin: 'left top',
-          },
-        };
-      default:
-        return { className: '', style: {} };
+        },
+    };
+
+    const styles = isSmallScreen ? smallScreenStyles : largeScreenStyles;
+
+    switch (combinationIndex) {
+        case 0: // Top horizontal
+            return {
+                className: 'horizontal',
+                style: {
+                    ...styles.horizontalTop,
+                    backgroundColor: color,
+                },
+            };
+        case 1: // Middle horizontal
+            return {
+                className: 'horizontal',
+                style: {
+                    ...styles.horizontalMiddle,
+                    backgroundColor: color,
+                },
+            };
+        case 2: // Bottom horizontal
+            return {
+                className: 'horizontal',
+                style: {
+                    ...styles.horizontalBottom,
+                    backgroundColor: color,
+                },
+            };
+        case 3: // Left vertical
+            return {
+                className: 'vertical',
+                style: {
+                    ...styles.verticalLeft,
+                    backgroundColor: color,
+                },
+            };
+        case 4: // Middle vertical
+            return {
+                className: 'vertical',
+                style: {
+                    ...styles.verticalMiddle,
+                    backgroundColor: color,
+                },
+            };
+        case 5: // Right vertical
+            return {
+                className: 'vertical',
+                style: {
+                    ...styles.verticalRight,
+                    backgroundColor: color,
+                },
+            };
+        case 6: // Top-left to bottom-right diagonal
+            return {
+                className: 'diagonal',
+                style: {
+                    ...styles.diagonalTopLeftBottomRight,
+                    backgroundColor: color,
+                },
+            };
+        case 7: // Top-right to bottom-left diagonal
+            return {
+                className: 'diagonal',
+                style: {
+                    ...styles.diagonalTopRightBottomLeft,
+                    backgroundColor: color,
+                },
+            };
+        default:
+            return { className: '', style: {} };
     }
-  };
+};
+
+
   return playerSide ? (
     !showGameOver ? (
       <div className="App">
