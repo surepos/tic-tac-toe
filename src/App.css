@@ -1,38 +1,392 @@
-.App {
-  text-align: center;
+body {
+  margin: 0%;
+  padding: 0%;
+  background-color: #222831;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+
+
+
+
+
+
+
+
+@keyframes drawLineHorizontal {
+  from {
+    width: 0;
+  }
+  to {
+    width: 85%;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+@keyframes drawLineVertical {
+  from {
+    height: 0;
+  }
+  to {
+    height: 85%;
+  }
+}
+@keyframes drawLineDiagonal {
+  from {
+    width: 0;
+  }
+  to {
+    width: 117%;
+  }
+}
+#root {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.App {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 30px;
+  width: 90%;
+  /* margin: 2vh 5vw; */
+  height: 90vh;
+}
+.gameMode {
+  align-self: end;
+}
+
+.gameMode label {
+  width: 180px;
+  height: 70px;
+  position: relative;
+  display: block;
+  background-color: #eeeeee;
+  border-radius: 200px;
+  box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.6),
+    inset 0px -5px 15px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.gameMode label::after {
+  content: '';
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  background: linear-gradient(180deg, #7bd9d7, #4281f8);
+  border-radius: 180px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
+}
+.gameMode input {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.gameMode input:checked + label::after {
+  left: 170px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #fdb863, #f99d17);
+}
+/* .gameMode label:active::after{
+  width: 260px;
+} */
+.gameMode label svg {
+  position: absolute;
+  width: 40px;
+  top: 15px;
+  z-index: 100;
+  height: auto;
+}
+.gameMode label svg.ai {
+  left: 20px;
+  fill: #eeeeee;
+  transition: 0.3s;
+}
+.gameMode label svg.multiplayer {
+  left: 120px;
+  fill: #7e7e7e;
+  transition: 0.3s;
+}
+.gameMode input:checked + label svg.ai {
+  fill: #7e7e7e;
+}
+.gameMode input:checked + label svg.multiplayer {
+  fill: #eeeeee;
+}
+
+.gameBody {
+  display: grid;
+  grid-template-columns: repeat(3, 130px);
+  grid-template-rows: repeat(3, 130px);
+  gap: 25px;
+  padding: 30px;
+  background-color: #393e46;
+  border-radius: 40px;
+  position: relative;
+}
+
+.gameBody .tacPlace {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  background-color: #eeeeee;
+  font-size: 24px;
+  border-radius: 30px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px #999;
+  cursor: pointer;
+}
+.gameBody .tacPlace img {
+  width: 80px;
 }
 
-.App-link {
-  color: #61dafb;
+.gameBody .active:hover {
+  background-color: #cccccc;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.gameBody .active:active {
+  background-color: #aaaaaa;
+  box-shadow: 0 1px #333;
+  transform: translateY(2px);
+}
+.gameBody .winnerLine {
+  position: absolute;
+  height: 18px;
+  background-color: #f99d17;
+  border-radius: 10px;
+  z-index: 100;
+}
+
+.winnerLine.horizontal {
+  height: 18px;
+  animation: drawLineHorizontal 1s ease forwards;
+}
+
+.winnerLine.vertical {
+  width: 18px;
+  animation: drawLineVertical 1s ease forwards;
+}
+
+.winnerLine.diagonal {
+  animation: drawLineDiagonal 1s ease forwards;
+}
+
+.playerSide {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.playerSide .playerSideBody {
+  height: 40%;
+  width: 50%;
+  background-color: #393e46;
+  border-radius: 20px;
+  display: flex;
+  gap: 50px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.playerSide .playerSideBody .title {
+  font-size: 2.5rem;
+  color: #eeeeee;
+  font-family: 'Bungee Inline', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.playerSide .playerSideBody .playerOption {
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+}
+.playerSide .playerSideBody .playerOption img {
+  width: 70px;
+}
+.playerSide .playerSideBody .playerOption div {
+  height: 70px;
+  background-color: #eeeeee;
+  padding: 10px;
+  border-radius: 70px;
+  transition: 0.3s ease-in-out;
+}
+.playerSide .playerSideBody .playerOption div:hover {
+  transform: scale(1.09);
+  background-color: #e1dddd;
+  box-shadow: 0 2px #666;
+}
+
+.gameOver {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gameOver .gameOverBody {
+  height: 50%;
+  width: 50%;
+  background-color: #393e46;
+  border-radius: 20px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.gameOver .gameOverBody .winner {
+  font-size: 2.5rem;
+  color: #eeeeee;
+  font-family: 'Bungee Inline', sans-serif;
+}
+.gameOver .gameOverBody .resetButton {
+  font-size: 1.3rem;
+  color: #eeeeee;
+  font-family: 'Bungee Inline', sans-serif;
+  font-weight: 100;
+  border: 2px solid #eeeeee;
+  border-radius: 40px;
+  padding: 5px 15px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: 0.42s ease-in-out;
+  animation: fadeIn 0s ease-in-out 0s forwards;
+  opacity: 1;
+}
+
+.gameOver .gameOverBody .resetButton:hover {
+  color: #222831;
+  transform: scale(1.1);
+  border: none;
+}
+.gameOver .gameOverBody .resetButton:hover::before {
+  width: 200%;
+  height: 300%;
+  border-radius: 100%;
+}
+.gameOver .gameOverBody .resetButton::before {
+  content: '';
+  background-color: #f99d17;
+  position: absolute;
+  width: 0%;
+  bottom: 0;
+  left: 50%;
+  height: 0%;
+  transition: 0.42s ease-in-out;
+  z-index: -1;
+  transform: translateX(-50%) translateY(50%);
+}
+.gameOver .gameOverBody .xGameReset:hover {
+  color: #eeeeee;
+}
+.gameOver .gameOverBody .xGameReset::before{
+  background-color: #4281f8;
+  
+}
+@media (max-width: 600px) {
+  .App {
+    gap: 150px;
   }
-  to {
-    transform: rotate(360deg);
+  .gameMode {
+    align-self: center;
+  }
+  .gameBody {
+    display: grid;
+    grid-template-columns: repeat(3, 70px);
+    grid-template-rows: repeat(3, 70px);
+    gap: 25px;
+    padding: 30px;
+    background-color: #393e46;
+    border-radius: 25px;
+  }
+
+  .gameBody .tacPlace {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eeeeee;
+    font-size: 24px;
+    border-radius: 15px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px #999;
+    cursor: pointer;
+  }
+  .playerSide .playerSideBody {
+    height: 25%;
+    width: 80%;
+    background-color: #393e46;
+    border-radius: 20px;
+    gap: 30px;
+  }
+  .playerSide .playerSideBody .title {
+    font-size: 1.5rem;
+  }
+  .playerSide .playerSideBody .playerOption {
+    width: 80%;
+  }
+  .playerSide .playerSideBody .playerOption img {
+    width: 35px;
+  }
+  .playerSide .playerSideBody .playerOption div {
+    height: 35px;
+  }
+  .gameBody .tacPlace img {
+    width: 50px;
+  }
+  .gameOver .gameOverBody {
+    height: 25%;
+    width: 80%;
+  }
+  .gameOver .gameOverBody img {
+    width: 70px;
+  }
+  .gameOver .gameOverBody .winner {
+    font-size: 1.5rem;
+  }
+  .gameOver .gameOverBody .resetButton {
+    font-size: 1rem;
+    border-radius: 40px;
+    padding: 3px 10px;
+  }
+
+
+
+
+
+  .gameMode label {
+    width: 150px;
+    height: 55px;
+    border-radius: 200px;
+  }
+  .gameMode label::after {
+    width: 50px;
+    height: 50px;
+    top: 2px;
+    left: 5px;
+  }
+  
+  .gameMode input:checked + label::after {
+    left: 145px;
+  }
+
+  .gameMode label svg {
+    width: 30px;
+    top: 10px;
+  }
+  .gameMode label svg.ai {
+    left: 15px;
+   
+  }
+  .gameMode label svg.multiplayer {
+    left: 105px;
   }
 }
