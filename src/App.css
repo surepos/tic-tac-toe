@@ -86,9 +86,9 @@ body {
   transform: translateX(-100%);
   background: linear-gradient(180deg, #fdb863, #f99d17);
 }
-/* .gameMode label:active::after{
-  width: 260px;
-} */
+.gameMode label:active::after{
+  width: 90px;
+}
 .gameMode label svg {
   position: absolute;
   width: 40px;
