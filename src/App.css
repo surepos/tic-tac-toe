@@ -294,7 +294,7 @@ body {
     overflow-y: hidden;
   }
   .App {
-    gap: 100px;
+    gap: 50px;
   }
   .gameMode {
     align-self: center;
@@ -326,7 +326,7 @@ body {
     background-color: #393e46;
     border-radius: 20px;
     gap: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
   }
   .playerSide .playerSideBody .title {
     font-size: 2rem;
