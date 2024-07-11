@@ -300,6 +300,8 @@ function App() {
     }
 };
 
+const getScaleValue = () => window.innerWidth < 600 ? 1.3 : 1.2;
+
 
   return playerSide ? (
     !showGameOver ? (
@@ -430,7 +432,7 @@ function App() {
               <motion.div
               key={index}
               initial={{ scale: 1 }}
-              animate={winningCells.includes(index)? { scale: 1.2 } : { scale: 1 }}
+              animate={winningCells.includes(index)? { scale: getScaleValue() } : { scale: 1 }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
               className={`tacPlace ${value ? '' : 'active'}`}
               onClick={() => handleClick(index)}>
