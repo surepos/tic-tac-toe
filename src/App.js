@@ -16,6 +16,7 @@ function App() {
   const [winCombinationIndex, setWinCombinationIndex] = useState(null);
   const [gameReset, setGameReset] = useState(false);
   const [winningCells, setWinningCells] = useState([]);
+  
 
   const GameReset = () => {
     setGrid(Array(9).fill(null));
@@ -27,9 +28,18 @@ function App() {
     setPlayerSide('');
     setWinningCells([])
   };
-  if (gameReset) {
-    GameReset();
-  }
+
+
+
+  useEffect(() => {
+    if (gameReset) {
+      GameReset();
+    }
+  }, [gameReset]);
+
+
+
+  
   useEffect(() => {
     if (playerSide) {
       setComputerSide(playerSide === 'X' ? 'O' : 'X');
@@ -56,11 +66,73 @@ function App() {
 
     setTimeout(() => {
       if (gameOn) {
-        computerClick(newGrid);
+        // computerClick(newGrid);
+        findBestMove(newGrid, computerSide)
       }
     }, 1000);
   };
 
+
+  const findBestMove = (currentGrid, player) => {
+    let bestScore = -Infinity;
+    let bestMove = -1;
+
+    for (let i = 0; i < currentGrid.length; i++) {
+      if (currentGrid[i] === null) {
+        currentGrid[i] = player;
+        const score = minimax(currentGrid, player === 'X' ? 'O' : 'X', false);
+        currentGrid[i] = null;
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestMove = i;
+        }
+      }
+    }
+
+    return bestMove;
+  };
+
+
+  const minimax = (currentGrid, player, isMaximizing) => {
+    const winner = checkGameOver(currentGrid);
+    if (winner === 'X') {
+      return -10;
+    }
+    if (winner === 'O') {
+      return 10;
+    }
+    if (!currentGrid.includes(null)) {
+      return 0;
+    }
+
+    if (isMaximizing) {
+      let bestScore = -Infinity;
+      for (let i = 0; i < currentGrid.length; i++) {
+        if (currentGrid[i] === null) {
+          currentGrid[i] = player;
+          const score = minimax(currentGrid, player === 'X' ? 'O' : 'X', false);
+          currentGrid[i] = null;
+          bestScore = Math.max(bestScore, score);
+        }
+      }
+      return bestScore;
+    } else {
+      let bestScore = Infinity;
+      for (let i = 0; i < currentGrid.length; i++) {
+        if (currentGrid[i] === null) {
+          currentGrid[i] = player;
+          const score = minimax(currentGrid, player === 'X' ? 'O' : 'X', true);
+          currentGrid[i] = null;
+          bestScore = Math.min(bestScore, score);
+        }
+      }
+      return bestScore;
+    }
+  };
+
+
+  
   const computerClick = useCallback(
     (currentGrid) => {
       if (!gameOn) {
@@ -109,16 +181,15 @@ function App() {
         setWinningCells(newCell)
         setWinner(currentGrid[a]);
         setTimeout(() => setWinCombinationIndex(i), 800);
-        ;
         setTimeout(() => setShowGameOver(true), 3000);
-        return true; 
+        return currentGrid[a]; 
       }
     }
 
     if (!currentGrid.includes(null)) {
       setWinner('D');
       setTimeout(() => setShowGameOver(true), 3000);
-      return true; // Game over, return true
+      return "D"; // Game over, return true
     }
 
     return false; // Game still ongoing, return false
@@ -302,7 +373,6 @@ function App() {
 
 const getScaleValue = () => window.innerWidth < 600 ? 1.3 : 1.2;
 
-
   return playerSide ? (
     !showGameOver ? (
       <div className="App">
@@ -468,3 +538,4 @@ const getScaleValue = () => window.innerWidth < 600 ? 1.3 : 1.2;
 }
 
 export default App;
+
