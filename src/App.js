@@ -30,8 +30,12 @@ function App() {
   };
   const handleCheckboxChange = () => {
     setIsHardMode(!isHardMode);
+    setGrid(Array(9).fill(null));
+    setWinner('');
+    setWinCombinationIndex(null);
+    setWinningCells([]);
 };
-console.log(isHardMode)
+
 
   useEffect(() => {
     if (gameReset) {

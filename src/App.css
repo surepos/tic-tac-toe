@@ -91,8 +91,8 @@ body {
 }
 .gameMode label svg {
   position: absolute;
-  width: 40px;
-  top: 15px;
+  width: 43px;
+  top: 13px;
   z-index: 100;
   height: auto;
 }
@@ -383,14 +383,18 @@ body {
   }
 
   .gameMode label svg {
-    width: 30px;
+    width: 40px;
     top: 10px;
   }
   .gameMode label svg.ai {
+    top: 13px;
     left: 15px;
    
   }
+  
+   
   .gameMode label svg.multiplayer {
-    left: 105px;
+    left: 100px;
+    top: 7px;
   }
 }
