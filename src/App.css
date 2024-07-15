@@ -97,7 +97,9 @@ body {
   height: auto;
 }
 .gameMode label svg.ai {
-  left: 20px;
+  width: 30px;
+  top: 19px;
+  left: 25px;
   fill: #eeeeee;
   transition: 0.3s;
 }
